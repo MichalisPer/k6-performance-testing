@@ -10,51 +10,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 🧾 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Go
+      - name: 🧰 Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.21'
-        
-      - name: Set up Node.js
+
+      - name: 🧰 Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # or your preferred version
+          node-version: '20'
 
-      - name: Install dependencies with npm ci
+      - name: 📦 Install Node.js dependencies
         run: npm ci
 
-      - name: Build custom k6 binary to .bin/k6
+      - name: 🧱 Build custom k6 binary with extensions
         run: |
-            mkdir -p .bin
-            go install go.k6.io/xk6/cmd/xk6@latest
-            xk6 build \
+          mkdir -p .bin
+          go install go.k6.io/xk6/cmd/xk6@latest
+          xk6 build \
             --with github.com/szkiba/xk6-dotenv@latest \
             --with github.com/avitalique/xk6-file@latest \
             --output .bin/k6
-            chmod +x .bin/k6
+        env:
+          PATH: ${{ github.workspace }}/.bin:${{ env.PATH }}
 
-      - name: Prepend .bin to PATH
-        run: echo "$GITHUB_WORKSPACE/.bin" >> $GITHUB_PATH
-    
-      - name: Verify k6 version
+      - name: ✅ Add .bin to PATH
+        run: echo "${GITHUB_WORKSPACE}/.bin" >> $GITHUB_PATH
+
+      - name: 🔍 Verify k6 version
         run: k6 version
-    
-      - name: Set up Chromium and Environment
+
+      - name: 🧪 Set up Chrome for k6/browser
+        uses: browser-actions/setup-chrome@latest
+
+      - name: ✅ Set environment for k6/browser
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
-          export K6_BROWSER_EXECUTABLE_PATH=/usr/bin/google-chrome
-          export K6_BROWSER_HEADLESS=true
-          echo "K6_BROWSER_EXECUTABLE_PATH=/usr/bin/google-chrome" >> $GITHUB_ENV
+          echo "K6_BROWSER_EXECUTABLE_PATH=${CHROME_PATH}" >> $GITHUB_ENV
           echo "K6_BROWSER_HEADLESS=true" >> $GITHUB_ENV
 
-      - name: Run k6
+      - name: 🚀 Run k6 browser test
         run: npm run test
 
-      - name: Upload test artifacts
+      - name: 📤 Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
