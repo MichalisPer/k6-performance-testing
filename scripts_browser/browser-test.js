@@ -18,8 +18,7 @@ export const options = {
         { duration: '30s', target: 10 }, // stay at 10 VUs
         { duration: '5s', target: 0 },   // ramp down to 0 VUs
       ],
-      gracefulStop: '30s',
-      exec: 'default',
+      gracefulStop: '1m',
       options: {
         browser: {
           type: 'chromium',
