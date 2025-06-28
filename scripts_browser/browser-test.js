@@ -35,7 +35,11 @@ export const options = {
 export default async function () {
   console.log(__ENV.USER_NAME, __ENV.PASSWORD);
   const cookies = JSON.parse(file.readFile('cookies.json'));
-  const context = await browser.newContext();
+  const context = await browser.newContext({
+  launchOptions: {
+    args: ['--no-sandbox', '--disable-dev-shm-usage'],
+  },
+});
   await context.addCookies(cookies);
   const page = await context.newPage();
 
