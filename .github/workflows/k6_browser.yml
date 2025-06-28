@@ -41,6 +41,15 @@ jobs:
     
       - name: Verify k6 version
         run: k6 version
+    
+      - name: Set up Chromium and Environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          export K6_BROWSER_EXECUTABLE_PATH=/usr/bin/google-chrome
+          export K6_BROWSER_HEADLESS=true
+          echo "K6_BROWSER_EXECUTABLE_PATH=/usr/bin/google-chrome" >> $GITHUB_ENV
+          echo "K6_BROWSER_HEADLESS=true" >> $GITHUB_ENV
 
       - name: Run k6
         run: npm run test
