@@ -1,0 +1,35 @@
+[
+  {
+    "name": "AWSALB",
+    "value": "hJgwRRl3SBvCf3De80XoSjccza2sRk5mNKzXgAKHR7v61N4+FKZnOw7oSSWcNLOPrQfrifIRzLOH3oOmc1+FaV/sm8FJ8ynsbmmF3M3GZvui0QR6Zm3FeyWyfeMX",
+    "domain": "quickpizza.grafana.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "",
+    "url": "",
+    "expires": 1751724154
+  },
+  {
+    "name": "AWSALBCORS",
+    "value": "hJgwRRl3SBvCf3De80XoSjccza2sRk5mNKzXgAKHR7v61N4+FKZnOw7oSSWcNLOPrQfrifIRzLOH3oOmc1+FaV/sm8FJ8ynsbmmF3M3GZvui0QR6Zm3FeyWyfeMX",
+    "domain": "quickpizza.grafana.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None",
+    "url": "",
+    "expires": 1751724154
+  },
+  {
+    "name": "qp_user_token",
+    "value": "abcdef0123456789",
+    "domain": "quickpizza.grafana.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Strict",
+    "url": "",
+    "expires": -1
+  }
+]

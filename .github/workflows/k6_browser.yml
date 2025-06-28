@@ -1,0 +1,46 @@
+name: Run k6 Load Test with Extensions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'  # or your preferred version
+
+      - name: Build custom k6 binary to .bin/k6
+        run: |
+            mkdir -p .bin
+            go install go.k6.io/xk6/cmd/xk6@latest
+            xk6 build \
+            --with github.com/szkiba/xk6-dotenv@latest \
+            --with github.com/avitalique/xk6-file@latest \
+            --output .bin/k6
+            chmod +x .bin/k6
+
+      - name: Prepend .bin to PATH
+        run: echo "$GITHUB_WORKSPACE/.bin" >> $GITHUB_PATH
+
+      - name: Run k6
+        run: npm run test
+
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-artifacts
+          path: reports/index.html
