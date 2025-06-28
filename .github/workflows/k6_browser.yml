@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: '20'  # or your preferred version
 
+      - name: Install dependencies with npm ci
+        run: npm ci
+
       - name: Build custom k6 binary to .bin/k6
         run: |
             mkdir -p .bin
