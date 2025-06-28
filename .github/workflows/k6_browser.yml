@@ -38,6 +38,9 @@ jobs:
 
       - name: Prepend .bin to PATH
         run: echo "$GITHUB_WORKSPACE/.bin" >> $GITHUB_PATH
+    
+      - name: Verify k6 version
+        run: k6 version
 
       - name: Run k6
         run: npm run test
